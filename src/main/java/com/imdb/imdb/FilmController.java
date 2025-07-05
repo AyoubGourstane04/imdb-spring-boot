@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 @RestController
 @RequestMapping("films")
 public class FilmController {
@@ -24,6 +25,12 @@ public class FilmController {
     @PostMapping
     public void AddNewFilm(@RequestBody Film film){
         filmService.insertFilm(film);
+    }
+
+    // dir liha hka fach bitdir request :POST http://localhost:8080/films/bulk
+    @PostMapping("/bulk")
+    public void addFilms(@RequestBody List<Film> films){
+            filmService.insertFilms(films);
     }
 
     @GetMapping
@@ -50,6 +57,24 @@ public class FilmController {
     public void updateFilmById(@PathVariable Integer id, @RequestBody Film film){
         filmService.editFilmById(id,film);
     }
+
+    // dir liha hka fach bitdir request :PUT http://localhost:8080/films/Title/like
+    @PutMapping("{Title}/like")
+    public void IncrementLikesCount(@PathVariable String Title){
+        filmService.updateLikes(Title);
+    }
+
+    /* dir liha hka fach bitdir request :PUT http://localhost:8080/films/Title/comment
+        ou flbody lcomment ikon ghir text 3adi bach it9ra ka string bla ""
+    */
+    @PutMapping("{Title}/comment")
+    public void AddComment(@PathVariable String Title,@RequestBody String comment){
+        filmService.InsertComment(Title,comment);
+    }
+
+
+
+
 
 
 }
