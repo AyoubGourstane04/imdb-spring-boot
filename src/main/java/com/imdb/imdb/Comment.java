@@ -1,17 +1,18 @@
 package com.imdb.imdb;
 
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Comment {
     private String content;
-    private String date;
+    private LocalDateTime dateTime;
 
     public Comment() {}
 
-    public Comment(String content, String date) {
+    public Comment(String content, LocalDateTime dateTime) {
         this.content = content;
-        this.date=date;
+        this.dateTime=dateTime;
     }
 
     public String getContent() {
@@ -22,12 +23,12 @@ public class Comment {
         this.content = content;
     }
 
-    public String getDate() {
-        return date;
+    public LocalDateTime getDate() {
+        return dateTime;
     }
 
-    public void SetDate(String date) {
-        this.date=date;
+    public void SetDate(LocalDateTime dateTime) {
+        this.dateTime=dateTime;
     }
 
     @Override
@@ -36,11 +37,11 @@ public class Comment {
         if (!(o instanceof Comment)) return false;
         Comment comment = (Comment) o;
         return Objects.equals(content, comment.content) &&
-               Objects.equals(date, comment.date);
+               Objects.equals(dateTime, comment.dateTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(content, date);
+        return Objects.hash(content, dateTime);
     }
 }

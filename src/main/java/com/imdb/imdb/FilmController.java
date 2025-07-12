@@ -2,6 +2,7 @@ package com.imdb.imdb;
 
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +24,7 @@ public class FilmController {
     }
 
     @PostMapping
-    public void AddNewFilm(@RequestBody Film film){
+    public void addNewFilm(@RequestBody Film film){
         filmService.insertFilm(film);
     }
 
@@ -39,28 +40,28 @@ public class FilmController {
     }
 
     @GetMapping("{id}")
-    public Film getFilmById(@PathVariable Integer id){
+    public Film getFilmById(@PathVariable ObjectId id){
         return filmService.getFilmId(id);
     }
 
     @DeleteMapping
-    public void DeleteAllFilms(){
-        filmService.RemoveAllFilms();
+    public void deleteAllFilms(){
+        filmService.removeAllFilms();
     }
 
     @DeleteMapping("{id}")
-    public void DeleteFilmById(@PathVariable Integer id){
-        filmService.RemoveFilmById(id);
+    public void deleteFilmById(@PathVariable ObjectId id){
+        filmService.removeFilmById(id);
     }
 
     @PutMapping("{id}")
-    public void updateFilmById(@PathVariable Integer id, @RequestBody Film film){
+    public void updateFilmById(@PathVariable ObjectId id, @RequestBody Film film){
         filmService.editFilmById(id,film);
     }
 
     // dir liha hka fach bitdir request :PUT http://localhost:8080/films/Title/like
     @PutMapping("{Title}/like")
-    public void IncrementLikesCount(@PathVariable String Title){
+    public void incrementLikesCount(@PathVariable String Title){
         filmService.updateLikes(Title);
     }
 
@@ -68,8 +69,8 @@ public class FilmController {
         ou flbody lcomment ikon ghir text 3adi bach it9ra ka string bla ""
     */
     @PutMapping("{Title}/comment")
-    public void AddComment(@PathVariable String Title,@RequestBody String comment){
-        filmService.InsertComment(Title,comment);
+    public void addComment(@PathVariable String Title,@RequestBody String comment){
+        filmService.insertComment(Title,comment);
     }
 
 

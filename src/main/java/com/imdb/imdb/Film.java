@@ -3,14 +3,14 @@ package com.imdb.imdb;
 import java.util.List;
 import java.util.Objects;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-//Hna wakha kay id walakin dayr hir dak li kay3ti mongodb ldocument oula object mn 3ndo ou flcontroller ou sevice khdam btitle ka id (ban lia 7sen flinteraction m3a lclient)
 @Document(collection = "films")
 public class Film {
     @Id
-    private Integer id;
+    private ObjectId id;
     private String Title;
     private String Director;
     private List<String> MainCast;
@@ -20,8 +20,7 @@ public class Film {
 
     public Film(){}
 
-    public Film(Integer id, String Title, String Director, List<String> MainCast, Integer CommentsCount, Integer LikesCount, List<Comment> Comments){
-        this.id = id;
+    public Film(String Title, String Director, List<String> MainCast, Integer CommentsCount, Integer LikesCount, List<Comment> Comments){
         this.Title = Title;
         this.Director = Director;
         this.MainCast = MainCast;
@@ -30,12 +29,8 @@ public class Film {
         this.Comments = Comments;
     }
 
-    public Integer getId() {
+    public ObjectId getId() {
         return this.id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getTitle(){

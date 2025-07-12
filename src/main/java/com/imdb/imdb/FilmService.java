@@ -1,9 +1,9 @@
 package com.imdb.imdb;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -25,15 +25,15 @@ public class FilmService {
         return filmRepository.findAll();
     }
 
-    public Film getFilmId(Integer id){
+    public Film getFilmId(ObjectId id){
         return filmRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, id+" not found."));
     }
 
-    public void RemoveAllFilms(){
+    public void removeAllFilms(){
         filmRepository.deleteAll();
     }
 
-    public void RemoveFilmById(Integer id){
+    public void removeFilmById(ObjectId id){
         boolean exists = filmRepository.existsById(id);
         if(!exists){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, id+" not found.");
@@ -42,14 +42,24 @@ public class FilmService {
         filmRepository.deleteById(id);
     }
 
+    public String checkString(String str){
+        if(str == null || !str.matches("^[A-Za-z0-9 ]+$")){
+            throw new IllegalArgumentException("Invalid format!");
+        }else{
+            return str;
+        }
+    }
 
 
-    public void editFilmById( Integer id, Film film){
+    public void editFilmById(ObjectId id, Film film){
         Film oldFilm = filmRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, id+" not found."));
 
-        oldFilm.setTitle(film.getTitle());
-        oldFilm.setDirector(film.getDirector());
+
+        oldFilm.setTitle(checkString(film.getTitle()));
+        oldFilm.setDirector(checkString(film.getDirector()));
+
         oldFilm.setMainCast(film.getMainCast());
+
         oldFilm.setCommentsCount(film.getCommentsCount());
         oldFilm.setLikesCount(film.getLikesCount());
         oldFilm.setComments(film.getComments());
@@ -57,15 +67,8 @@ public class FilmService {
         filmRepository.save(oldFilm);
     }
 
-
     public void updateLikes(String title){
-        List<Film> films = getAllFilms();
-        Film film=null;
-        for(Film movie : films){
-            if(title.equals(movie.getTitle())){
-                film = movie;
-            }
-        }
+        Film film = filmRepository.findByTitle(title);
 
         if(film == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, title + " not found.");
@@ -79,25 +82,14 @@ public class FilmService {
         filmRepository.save(film);
     }
 
-    public void InsertComment(String title,String Comment){
-        List<Film> films = getAllFilms();
-        Film film=null;
-        for(Film movie : films){
-            if(title.equals(movie.getTitle())){
-                film = movie;
-            }
-        }
+    public void insertComment(String title,String Comment){
+        Film film = filmRepository.findByTitle(title);
 
         if(film == null){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, title + " not found.");
         }
 
-        LocalDateTime date = LocalDateTime.now();
-        DateTimeFormatter formdate = DateTimeFormatter.ofPattern("E, dd-MM-yyyy HH:mm:ss");
-        String newDate = date.format(formdate);
-
-        Comment comment = new Comment(Comment,newDate);
-
+        Comment comment = new Comment(checkString(Comment),LocalDateTime.now());
         film.getComments().add(comment);
 
         Integer newComments=film.getCommentsCount();
@@ -111,5 +103,7 @@ public class FilmService {
     public void insertFilms(List<Film> films){
         filmRepository.saveAll(films);
     }
+
+      
 
 }
