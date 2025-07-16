@@ -1,2 +1,10 @@
 ##
 GET http://localhost:8080/films
+###
+GET http://localhost:8080/films/director/Christopher%20Nolan
+
+HTTP/1.1 200  - OK
+content-type: application/json
+transfer-encoding: chunked
+date: Mon, 14 Jul 2025 10:50:26 GMT
+connection: close

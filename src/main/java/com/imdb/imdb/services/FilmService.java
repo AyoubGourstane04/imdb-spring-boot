@@ -1,4 +1,4 @@
-package com.imdb.imdb;
+package com.imdb.imdb.services;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -7,6 +7,10 @@ import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
+
+import com.imdb.imdb.Comment;
+import com.imdb.imdb.Film;
+import com.imdb.imdb.repos.FilmRepository;
 
 @Service
 public class FilmService {
@@ -17,8 +21,8 @@ public class FilmService {
         this.filmRepository=filmRepository;
     }
 
-    public void insertFilm(Film film){
-        filmRepository.save(film);
+    public Film insertFilm(Film film){
+        return filmRepository.save(film);
     }
 
     public List<Film>getAllFilms(){
@@ -29,21 +33,24 @@ public class FilmService {
         return filmRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, id+" not found."));
     }
 
-    public void removeAllFilms(){
+    public String removeAllFilms(){
         filmRepository.deleteAll();
+        return "All films deleted successfully!";
     }
 
-    public void removeFilmById(ObjectId id){
+    public String removeFilmById(ObjectId id){
         boolean exists = filmRepository.existsById(id);
         if(!exists){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, id+" not found.");
         }
 
         filmRepository.deleteById(id);
+
+        return "Film deleted successfully!";
     }
 
     public String checkString(String str){
-        if(str == null || !str.matches("^[A-Za-z0-9 ]+$")){
+        if(str == null || !str.matches("^[A-Za-z0-9 !?,.']+$")){
             throw new IllegalArgumentException("Invalid format!");
         }else{
             return str;
@@ -51,7 +58,7 @@ public class FilmService {
     }
 
 
-    public void editFilmById(ObjectId id, Film film){
+    public Film editFilmById(ObjectId id, Film film){
         Film oldFilm = filmRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, id+" not found."));
 
 
@@ -64,44 +71,59 @@ public class FilmService {
         oldFilm.setLikesCount(film.getLikesCount());
         oldFilm.setComments(film.getComments());
 
-        filmRepository.save(oldFilm);
+        return filmRepository.save(oldFilm);
     }
 
-    public void updateLikes(String title){
-        Film film = filmRepository.findByTitle(title);
+    public List<Film> updateLikes(String title){
+        List<Film> movies = filmRepository.findByTitle(title);
 
-        if(film == null){
+        if(movies.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, title + " not found.");
         }
+    
+        for(Film film : movies){
+            Integer newLikes=film.getLikesCount();
+            newLikes++;
 
-        Integer newLikes=film.getLikesCount();
-        newLikes++;
-
-        film.setLikesCount(newLikes);
-
-        filmRepository.save(film);
+            film.setLikesCount(newLikes);
+        
+        }
+       
+        return filmRepository.saveAll(movies);
     }
 
-    public void insertComment(String title,String Comment){
-        Film film = filmRepository.findByTitle(title);
+    public List<Film> insertComment(String title,String Comment){
+       List<Film> movies = filmRepository.findByTitle(title);
 
-        if(film == null){
+        if(movies.isEmpty()){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, title + " not found.");
         }
-
+    
         Comment comment = new Comment(checkString(Comment),LocalDateTime.now());
-        film.getComments().add(comment);
 
-        Integer newComments=film.getCommentsCount();
-        newComments++;
+        for(Film film : movies){
+            film.getComments().add(comment);
 
-        film.setCommentsCount(newComments);
+            Integer newComments=film.getCommentsCount();
+            newComments++;
 
-        filmRepository.save(film);
+            film.setCommentsCount(newComments);
+        }
+       
+        return filmRepository.saveAll(movies);
     }
 
-    public void insertFilms(List<Film> films){
-        filmRepository.saveAll(films);
+    public List<Film> insertFilms(List<Film> films){
+        return filmRepository.saveAll(films);
+    }
+
+    public List<Film> getFilmTitle(String title){
+        return filmRepository.findByTitle(title);
+    }
+
+    
+    public List<Film> getFilmDirector(String Director){
+        return filmRepository.findAllByDirector(Director);
     }
 
       
