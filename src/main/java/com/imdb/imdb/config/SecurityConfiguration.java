@@ -18,7 +18,7 @@ public class SecurityConfiguration {
 
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthFilter jwtAuthFilter;
-    private static final String[] PATTERNS = {"/users/auth/**","/users/films/**"};
+    private static final String[] PATTERNS = {"/users/auth/**"};
 
 
     @Bean

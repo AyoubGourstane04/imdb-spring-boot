@@ -9,10 +9,10 @@ import com.imdb.imdb.Film;
 
 
 
-public interface FilmRepository extends MongoRepository<Film,ObjectId>{
+public interface FilmRepository extends MongoRepository<Film,String>{
 
     public List<Film> findByTitle(String title);
 
     public List<Film> findAllByDirector(String Director);
-
+    
 }

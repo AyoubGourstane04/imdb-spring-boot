@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.imdb.imdb.auth.AuthenticationRequest;
 import com.imdb.imdb.auth.AuthenticationResponse;
-import com.imdb.imdb.auth.ResgisterRequest;
+import com.imdb.imdb.auth.RegisterRequest;
 import com.imdb.imdb.config.JwtService;
 import com.imdb.imdb.repos.AuthRepository;
 
@@ -28,7 +28,7 @@ public class AuthService {
 
 
    
-    public AuthenticationResponse register(ResgisterRequest request){
+    public AuthenticationResponse register(RegisterRequest request){
         var user = User.builder()
                         .firstname(request.getFirstname())
                         .lastname(request.getLastname())

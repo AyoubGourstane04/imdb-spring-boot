@@ -1,5 +1,7 @@
-package com.imdb.imdb.auth;
+package com.imdb.imdb;
 
+
+// import org.bson.types.ObjectId;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,8 +12,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthenticationRequest {
-    private String username;
-     String password;
-
+public class Image {
+    // private ObjectId id;
+    private String imageName;
+    private String imagePath;
 }

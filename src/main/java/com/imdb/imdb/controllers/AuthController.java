@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.imdb.imdb.auth.AuthenticationRequest;
 import com.imdb.imdb.auth.AuthenticationResponse;
-import com.imdb.imdb.auth.ResgisterRequest;
+import com.imdb.imdb.auth.RegisterRequest;
 import com.imdb.imdb.services.AuthService;
 
 
@@ -23,7 +23,7 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody ResgisterRequest request){
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request){
         return ResponseEntity.ok(authService.register(request));
     }
 
