@@ -13,6 +13,7 @@ import com.imdb.imdb.auth.RegisterRequest;
 import com.imdb.imdb.services.AuthService;
 
 
+
 @RestController
 @RequestMapping("users/auth")
 public class AuthController {
@@ -22,10 +23,10 @@ public class AuthController {
         this.authService=authService;
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request){
-        return ResponseEntity.ok(authService.register(request));
-    }
+    // @PostMapping("/register")
+    // public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request){
+    //     return ResponseEntity.ok(authService.register(request));
+    // }
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request){

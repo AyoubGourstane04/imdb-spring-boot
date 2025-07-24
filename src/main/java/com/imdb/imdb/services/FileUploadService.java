@@ -47,7 +47,7 @@ public class FileUploadService {
 
         Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
-        System.out.println(filePath);
+        // System.out.println(filePath);
 
         return filePath.toString();
     }

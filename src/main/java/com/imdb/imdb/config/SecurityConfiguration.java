@@ -9,8 +9,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 
+@Builder
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -18,7 +20,7 @@ public class SecurityConfiguration {
 
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthFilter jwtAuthFilter;
-    private static final String[] PATTERNS = {"/users/auth/**"};
+    private static final String[] PATTERNS = {"/users/auth/**","/users/admin/**"};
 
 
     @Bean
@@ -26,11 +28,11 @@ public class SecurityConfiguration {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(
-                    request -> {request.requestMatchers(PATTERNS)
-                                        .permitAll()
-                                        .anyRequest()
-                                        .authenticated();
-                                }    
+                    request -> {request
+                                    .requestMatchers(PATTERNS[0]).permitAll()
+                                    .requestMatchers(PATTERNS[1]).hasRole("ADMIN")
+                                    .anyRequest().authenticated();
+                                }   
                 ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)

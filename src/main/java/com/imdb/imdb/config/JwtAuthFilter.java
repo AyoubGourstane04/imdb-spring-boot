@@ -2,7 +2,6 @@ package com.imdb.imdb.config;
 
 import java.io.IOException;
 
-import javax.swing.text.StyledEditorKit.StyledTextAction;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

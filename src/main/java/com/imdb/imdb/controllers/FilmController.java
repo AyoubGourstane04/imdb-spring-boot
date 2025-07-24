@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.util.List;
 
 import org.bson.json.JsonObject;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +23,7 @@ import com.imdb.imdb.services.FilmService;
 
 
 @RestController
+@EnableMethodSecurity
 @RequestMapping("users/films")
 public class FilmController {
 
@@ -51,11 +54,13 @@ public class FilmController {
         return filmService.getFilmById(id);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/deleteAll")
     public String deleteAllFilms(){
         return filmService.removeAllFilms();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public String deleteFilmById(@PathVariable String id){
         return filmService.removeFilmById(id);
@@ -87,15 +92,6 @@ public class FilmController {
         return filmService.getFilmDirector(Director);
     }
 
-    // @PostMapping("/{id}/image")
-    // public Film addImageById(@PathVariable String id, @RequestBody MultipartFile image) throws IOException{
-    //     return filmService.insertImageById(id,image);
-    // }
-
-    // @GetMapping("/{id}/image")
-    // public String getImageById(@PathVariable String id){
-    //     return filmService.getImageById(id);
-    // }
     
 
 
