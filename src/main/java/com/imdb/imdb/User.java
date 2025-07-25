@@ -1,5 +1,6 @@
 package com.imdb.imdb;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
@@ -34,6 +35,8 @@ public class User implements UserDetails{
     @JsonIgnore
     private String password;
     private Role role;
+    private Boolean passwordResetFlag;
+    private LocalDateTime lastPasswordChangeTime;
 
 
     @Override
@@ -50,6 +53,7 @@ public class User implements UserDetails{
     public String getPassword(){
         return this.password;
     }
+
 
     @Override
 	public boolean isAccountNonExpired() {

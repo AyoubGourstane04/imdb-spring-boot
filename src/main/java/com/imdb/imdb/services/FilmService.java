@@ -91,7 +91,7 @@ public class FilmService {
         return "Film deleted successfully!";
     }
 
-    public String checkString(String str){
+    public static String checkString(String str){
         if(str == null || !str.matches("^[A-Za-z0-9 !?,.']+$")){
             throw new IllegalArgumentException("Invalid format!");
         }else{
