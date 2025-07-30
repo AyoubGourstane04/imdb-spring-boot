@@ -20,7 +20,7 @@ public class SecurityConfiguration {
 
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthFilter jwtAuthFilter;
-    private static final String[] PATTERNS = {"/users/auth/**","/users/admin/**"};
+    private static final String[] PATTERNS = {"/users/auth/**","/users/admin/**","/templates/**","/static/**","/js/**","/icons/**"};
 
 
     @Bean
@@ -29,6 +29,7 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(
                     request -> {request
+                                    .requestMatchers(PATTERNS[2],PATTERNS[3],PATTERNS[4],PATTERNS[5]).permitAll()
                                     .requestMatchers(PATTERNS[0]).permitAll()
                                     .requestMatchers(PATTERNS[1]).hasRole("ADMIN")
                                     .anyRequest().authenticated();

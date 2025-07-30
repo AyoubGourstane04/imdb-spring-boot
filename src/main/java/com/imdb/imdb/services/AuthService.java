@@ -68,23 +68,27 @@ public class AuthService {
 
         var user = (User) auth.getPrincipal();
 
-        String message = null;
+        var jwt = jwtService.generateToken(user);
+        
+        var flag = false;
 
         if (user.getPasswordResetFlag()){
-            message = "POST http://localhost:8080/users/auth/updatePassword/" + user.getId().toString();
+           flag=true;
         }
-        var jwt = jwtService.generateToken(user);
 
         return AuthenticationResponse.builder()
                                     .token(jwt)
                                     .user(user)
-                                    .passwordChangeRequest(message)
+                                    .PasswordChangeFlag(flag)
                                     .build();
     }
 
-    public PasswordChangeResponse updatePassword(ObjectId id, PasswordChangeRequest request){
+    public PasswordChangeResponse updatePassword(PasswordChangeRequest request){
 
-        User user = authRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, id+" not found."));
+        ObjectId userId = new ObjectId(request.getUserId());
+
+        User user = getUserById(userId);
+
         
         if(!request.getPassword().equals(request.getConfirmPassword()))
             throw new IllegalArgumentException("the password and the confirmation password don't match!");
@@ -96,7 +100,9 @@ public class AuthService {
 
         authRepository.save(user);
 
-        return PasswordChangeResponse.builder().user(user).build();  
+        return PasswordChangeResponse.builder()
+                                     .user(user)
+                                     .build();  
     }
 
     public List<User> getAllUsers(){
@@ -106,6 +112,16 @@ public class AuthService {
     public void saveUsers(List<User> users){
         authRepository.saveAll(users);
     }
+
+    public User getUserById(ObjectId id){
+        return authRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, id+" not found."));
+    }
+
+    public User getUserByUsername(String username){
+        return authRepository.findByUsername(username).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, username +" not found."));
+    }
+
+         
 
 
 

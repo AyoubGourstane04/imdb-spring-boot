@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -52,7 +52,7 @@
                         <div class="text-start">
                             <h2 class="fw-bold mb-2 text-uppercase">Register new user</h2>
                             <p class="text-white-50 mb-5">Please enter the regestration infos :</p>
-                            <form action="http://localhost:8080/users/admin/register" method="post">
+                            <form class="form">
                                 <div data-mdb-input-init class="form-outline form-white mb-4">
                                     <label class="form-label" for="firstname">Firstname : </label>
                                     <input type="text" id="firstname"  name="firstname" class="form-control form-control-lg bg-secondary text-white" required/>
@@ -76,8 +76,8 @@
                                 </div> 
                             
                     </div>
-                                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" type="submit">Register</button>                    
                             </form>    
+                    <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" onclick="register()">Register</button>                    
                 </div>
                 </div>
                 </div>
@@ -85,6 +85,6 @@
             </div>
         </div>
     </section>       
-    
+    <script src="@{/js/registerUsers.js}"></script>
 </body>
 </html>

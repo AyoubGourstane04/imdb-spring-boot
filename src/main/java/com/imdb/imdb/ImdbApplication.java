@@ -13,4 +13,5 @@ public class ImdbApplication {
 		SpringApplication.run(ImdbApplication.class, args);
 	}
 
+
 }

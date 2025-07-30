@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,7 @@
             background-color:#15161a;
         }
     </style>
-    <link rel="icon" href="../static/icons/user-solid-full.svg">
+    <link rel="icon" th:href="@{/icons/user-solid-full.svg}">
 </head>
 <body class="bgbody">
    <section class="vh-120 gradient-custom">
@@ -26,7 +26,7 @@
                     <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
                     <p class="text-white-50 mb-5">Please enter your login and password</p>
                     <div class="text-start">
-                        <form action="http://localhost:8080/users/auth/login" method="post">
+                        <form class="form">
                         <div data-mdb-input-init class="form-outline form-white mb-4">
                             <label class="form-label" for="username">Username : </label>
                             <input type="text" id="username" name="username" class="form-control form-control-lg bg-secondary text-white" required/>
@@ -37,16 +37,17 @@
                             <input type="password" id="password" name="password" class="form-control form-control-lg bg-secondary text-white" required/>
                         </div> 
                     </div>
-
-                    <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" type="submit">Login</button>
-                </form>    
+                </form>
+                <button data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-light btn-lg px-5" onclick="login()">Login</button>    
                 </div>
                 </div>
                 </div>
             </div>
             </div>
         </div>
-    </section>       
+    </section>    
+    
+    <script th:src="@{/js/login.js}"></script>
     
 </body>
 </html>

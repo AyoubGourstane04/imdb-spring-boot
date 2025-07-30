@@ -16,5 +16,6 @@ import lombok.NoArgsConstructor;
 public class AuthenticationResponse {
     private String token;
     private User user;
-    private String passwordChangeRequest;
+    private Boolean PasswordChangeFlag;
+    // private String redirectUrl;
 }
