@@ -10,8 +10,6 @@ function login(){
         'password': passwordHolder 
     }
 
-    // console.log(data);
-
     const response = async (data) => {
         try {
             const res = await fetch('http://localhost:8080/users/auth/login', {
@@ -20,18 +18,33 @@ function login(){
                     'Content-Type': 'application/json'
                 },
                 mode: 'cors',
+                redirect:"follow",
                 body: JSON.stringify(data)
-
             });
-            // console.log("FUUUUUUUCK!!");            
-            if(res.status == 302){
-                window.location.href = res.url;
-            }else if (res.status == 200){
-                // const data = await res.json();
-                //  localStorage.put("token", data.token)
-                console.log("Success!!");
+
+            if (res.redirected)
+                window.location.href = res.url
+
+            
+            if (res.status == 200){
+                
+                const data = await res.json();
+                
+                localStorage.setItem("token", data.token);
+                window.location.href = "/static/index";
+                
             }else{
-                console.error("Errrrrrrooor!!");
+                const div = document.createElement("div");
+                div.setAttribute("class","alert alert-danger");
+                div.setAttribute("role","alert");
+                
+                const text =  document.createTextNode("invalid credentials");
+                div.appendChild(text);
+                
+                const section = document.querySelector("section");
+                document.body.insertBefore(div, section);
+
+                setTimeout(()=>{ div.remove(); },3000);
             }
                
         } catch (error) {

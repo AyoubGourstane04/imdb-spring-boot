@@ -17,5 +17,4 @@ public class AuthenticationResponse {
     private String token;
     private User user;
     private Boolean PasswordChangeFlag;
-    // private String redirectUrl;
 }

@@ -29,7 +29,7 @@ public class Film {
     private Integer commentsCount;
     private Integer likesCount;
     private List<Comment> comments;
-    // @JsonIgnore
     private Image image;
+    private String description;
 
 }

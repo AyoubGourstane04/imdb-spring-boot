@@ -14,12 +14,11 @@ function register(){
         'username': usernameHolder,
         'password': passwordHolder 
     }
-    // console.log(data);
 
     const response = async (data) => {
-        const token = localStorage.get("token")
+        const token = localStorage.getItem("token");
         if (!token)
-            window.location.href = "http://127.0.0.1:5500/src/main/resources/templates/login.html"
+            window.location.href = "/static/login"
         try {
             const res = await fetch('http://localhost:8080/users/admin/register', {
                     method: 'POST',
@@ -31,7 +30,7 @@ function register(){
                     body: JSON.stringify(data)
                 });
             if(res.status == 200){
-                window.location.href = "http://127.0.0.1:5500/src/main/resources/templates/usersPage.html";
+                window.location.href = "/static/usersPage";
             }
         } catch (error) {
             console.error(error);

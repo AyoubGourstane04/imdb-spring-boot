@@ -6,6 +6,7 @@ import java.util.List;
 import org.bson.json.JsonObject;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +22,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.imdb.imdb.Film;
 import com.imdb.imdb.services.FilmService;
 
-
+@CrossOrigin(origins = {"http://127.0.0.1:8080", "http://localhost:8080"}, maxAge = 3600)
 @RestController
 @EnableMethodSecurity
 @RequestMapping("users/films")
@@ -71,9 +72,9 @@ public class FilmController {
         return filmService.editFilmById(id,film);
     }
 
-    @PutMapping("/like/{Title}")
-    public List<Film> incrementLikesCount(@PathVariable String Title){
-        return filmService.updateLikes(Title);
+    @PutMapping("/like/{id}")
+    public Film incrementLikesCount(@PathVariable String id){
+        return filmService.updateLikes(id);
     }
 
     

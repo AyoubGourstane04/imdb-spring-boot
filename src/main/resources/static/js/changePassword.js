@@ -3,15 +3,15 @@ function submitPassword()
     const pass1Holder = document.getElementById("password").value
     const pass2Holder = document.getElementById("confirm").value
 
-    const changePaswordId = window.location.search.split("?")[1].split("=")[1]
+    const slice = window.location.href.split('/');
+    const changePaswordId = slice[5];
+    
+    console.log(changePaswordId);
 
     const data = {
         'password': pass1Holder,
         'confirmPassword': pass2Holder
     }
-
-    // console.log(data);
-    // console.log(JSON.stringify(data));
 
     const response = async (id, data) => {
         try {
@@ -25,7 +25,7 @@ function submitPassword()
             });
 
             if (res.status == 200)
-                window.location.href = "/login"; 
+                window.location.href = "/static/login"; 
            
         } catch (err) {
             console.error(err);

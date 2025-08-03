@@ -21,7 +21,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins = {"http://127.0.0.1:8080","http://localhost:8080"}, maxAge = 3600)
+@CrossOrigin(origins = {"http://127.0.0.1:8080", "http://localhost:8080"}, maxAge = 3600)
 @Data
 @Builder
 @EnableMethodSecurity
@@ -39,7 +39,7 @@ public class AdminController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("/all")
+    @GetMapping("/allUsers")
     public List<User> getAllUsers(){
         return authService.getAllUsers();
     }

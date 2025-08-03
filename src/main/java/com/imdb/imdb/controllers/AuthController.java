@@ -5,6 +5,8 @@ package com.imdb.imdb.controllers;
 
 import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,9 +24,11 @@ import com.imdb.imdb.services.PasswordChangeService;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 
 
-@CrossOrigin(origins = {"http://127.0.0.1:8080","http://localhost:8080"}, maxAge = 3600)
+
+@CrossOrigin(origins = {"http://127.0.0.1:8080", "http://localhost:8080"}, maxAge = 3600)
 @RestController
 @RequestMapping("users/auth")
 @Data
@@ -33,8 +37,6 @@ public class AuthController {
     private final AuthService authService;
     private final PasswordChangeService passwordChangeService;
 
-
-  
 
     @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request){ 
@@ -46,11 +48,12 @@ public class AuthController {
             var req = passwordChangeService.createPasswordChangeRequestByUserId(user.getId().toString());
           
             return ResponseEntity.status(302)
-                                 .header("location","/static/updatePassword?id="+ req.getId())
+                                 .header("Location","/static/updatePassword/"+ req.getId())
                                  .build();
         }
             return ResponseEntity.ok(response);
     }
+
 
     @PostMapping("/updatePassword/{id}")
     public ResponseEntity<PasswordChangeResponse> updatePassword(@PathVariable ObjectId id, @RequestBody PasswordChangeRequest body){
@@ -64,24 +67,11 @@ public class AuthController {
        return ResponseEntity.ok(authService.updatePassword(req));
     }
 
-
-
-
-
-
-
-
-
+    @GetMapping("/me")
+    public User getUserByToken(Authentication authentication) {
+        return (User) authentication.getPrincipal();
+    }
     
-
-
-
-
-
-
-
-    
-
 
 
                                                                 

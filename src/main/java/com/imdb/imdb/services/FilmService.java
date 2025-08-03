@@ -112,26 +112,23 @@ public class FilmService {
         oldFilm.setCommentsCount(film.getCommentsCount());
         oldFilm.setLikesCount(film.getLikesCount());
         oldFilm.setComments(film.getComments());
+        oldFilm.setImage(film.getImage());
+        oldFilm.setDescription(film.getDescription());
 
         return filmRepository.save(oldFilm);
     }
 
-    public List<Film> updateLikes(String title){
-        List<Film> movies = filmRepository.findByTitle(title);
-
-        if(movies.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, title + " not found.");
-        }
+    public Film updateLikes(String id){
+        Film film = filmRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, id+" not found."));
     
-        for(Film film : movies){
-            Integer newLikes=film.getLikesCount();
-            newLikes++;
+        Integer newLikes=film.getLikesCount();
+        newLikes++;
 
-            film.setLikesCount(newLikes);
+        film.setLikesCount(newLikes);
         
-        }
+        
        
-        return filmRepository.saveAll(movies);
+        return filmRepository.save(film);
     }
 
     public List<Film> insertComment(String title,String Comment){

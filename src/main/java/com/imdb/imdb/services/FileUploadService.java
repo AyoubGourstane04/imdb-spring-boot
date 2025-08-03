@@ -58,7 +58,7 @@ public class FileUploadService {
             Path filePath = Paths.get(fileUploadProperties.getUploadDir()).resolve(filename);
             Resource resource = new UrlResource(filePath.toUri());
 
-            //System.out.println(resource);
+            // System.out.println(resource);
 
             if (resource.exists()) {
                 return ResponseEntity.ok()

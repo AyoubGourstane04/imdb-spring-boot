@@ -3,6 +3,7 @@ package com.imdb.imdb.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
+// import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -20,8 +21,11 @@ public class SecurityConfiguration {
 
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthFilter jwtAuthFilter;
-    private static final String[] PATTERNS = {"/users/auth/**","/users/admin/**","/templates/**","/static/**","/js/**","/icons/**"};
-
+    private static final String[] PATTERNS = {
+                                                    "/users/admin/**",
+                                                "/users/auth/**","/users/files/**","/templates/**",
+                                                "/static/**","/js/**","/icons/**"
+                                            };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
@@ -29,9 +33,14 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(
                     request -> {request
-                                    .requestMatchers(PATTERNS[2],PATTERNS[3],PATTERNS[4],PATTERNS[5]).permitAll()
-                                    .requestMatchers(PATTERNS[0]).permitAll()
-                                    .requestMatchers(PATTERNS[1]).hasRole("ADMIN")
+                                    .requestMatchers(PATTERNS[1]).permitAll()
+                                    .requestMatchers(PATTERNS[2]).permitAll()
+                                    .requestMatchers(PATTERNS[3]).permitAll()
+                                    .requestMatchers(PATTERNS[4]).permitAll()
+                                    .requestMatchers(PATTERNS[5]).permitAll()
+                                    .requestMatchers(PATTERNS[6]).permitAll()
+                                    .requestMatchers(PATTERNS[0])
+                                    .hasRole("ADMIN")
                                     .anyRequest().authenticated();
                                 }   
                 ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

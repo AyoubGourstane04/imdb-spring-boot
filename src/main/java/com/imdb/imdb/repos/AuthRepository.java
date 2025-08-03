@@ -11,5 +11,5 @@ import com.imdb.imdb.User;
 
 public interface AuthRepository extends MongoRepository<User,ObjectId>{
     Optional<User> findByUsername(String username);
-    // Optional<User> findByResetToken(String resetToken);
+    // Optional<User> findByToken(String Token);
 }

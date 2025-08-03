@@ -1,25 +1,12 @@
 function nav(){
     const parent = document.querySelector("div ul");
 
-    const register = document.createElement("li");
-    register.setAttribute("class", "nav-item");
+    const register = document.getElementById("register");
 
-    const registerLink = document.createElement("a");
-    registerLink.setAttribute("class", "nav-link text-white");
-    registerLink.href = "register";
-    registerLink.innerText = "Register users";
+    const users = document.getElementById("users");
 
-    register.appendChild(registerLink);
-
-    const users = document.createElement("li");
-    users.setAttribute("class", "nav-item");
-
-    const usersLink = document.createElement("a");
-    usersLink.setAttribute("class", "nav-link text-white");
-    usersLink.href = "usersPage";
-    usersLink.innerText = "Users";
-
-    users.appendChild(usersLink);
+    
+    const nameSpot = document.getElementById("usersname");
 
     
     const token = localStorage.getItem("token");
@@ -41,9 +28,12 @@ function nav(){
                 window.location.href = "/static/login";
 
             const user = await res.json();
-            
-            if(user.authorities[0].authority === "ROLE_ADMIN"){
 
+            nameSpot.textContent = 'Hello ' + user.username;
+            
+            if(user.authorities[0].authority !== "ROLE_ADMIN"){
+                parent.removeChild(register);
+                parent.removeChild(users);
             }
 
         } catch (error) {

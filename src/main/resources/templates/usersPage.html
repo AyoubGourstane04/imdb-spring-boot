@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,34 +11,35 @@
             background-color:#15161a;
         }
     </style>
-    <link rel="icon" href="../static/icons/users-solid-full.svg">
+    <link rel="icon" th:href="@{/icons/users-solid-full.svg}">
 </head>
+<script th:src="@{/js/authGuard.js}"></script>    
 <body class="bgbody">
     <nav class="navbar navbar-expand-lg bg-dark ">
         <div class="container-fluid">
-            <a class="navbar-brand text-white" href="#">user's name</a>
+            <a class="navbar-brand text-white" href="" id="usersname"></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active text-white" aria-current="page" href="index.html">Home</a>
+                        <a class="nav-link active text-white" aria-current="page" href="index">Home</a>
                     </li>
                     <!--this only apears if role is admin-->
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="register.html">Register users</a>
+                    <li class="nav-item" id="register">
+                        <a class="nav-link text-white" href="register">Register users</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="usersPage.html">Users</a>
+                    <li class="nav-item" id="users">
+                        <a class="nav-link text-white" href="usersPage">Users</a>
                     </li>
                     <!-- ####### -->
                     <li class="nav-item">
-                        <a class="nav-link text-white" href="addFilm.html">Add Movie</a>
+                        <a class="nav-link text-white" href="addFilm">Add Movie</a>
                     </li>
                 </ul>
                 <span class="navbar-text">
-                    <a href="#" class="nav-link-active btn btn-light">Log out</a>
+                    <button class="nav-link-active btn btn-light" onclick="logout()">Log out</button>
                 </span>
             </div>
         </div>
@@ -54,39 +55,18 @@
                         <th scope="col">Lastname</th>
                         <th scope="col">Age</th>
                         <th scope="col">Username</th>
-                        <th scope="col">Operations</th>
+                        <th scope="col">Role</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>Mark</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>Jacob</td>
-                        <td>Thornton</td>
-                        <td>@fat</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
-                    <tr>
-                    <th scope="row">3</th>
-                        <td>John</td>
-                        <td>Doe</td>
-                        <td>@social</td>
-                        <td>Otto</td>
-                        <td>@mdo</td>
-                    </tr>
+
                 </tbody>
             </table>
        </div>
     </div>
     
-
+    <script th:src="@{/js/logout.js}"></script>
+    <script th:src="@{/js/navBarHandler.js}"></script>
+    <script th:src="@{/js/usersList.js}"></script>                    
 </body>
 </html>
