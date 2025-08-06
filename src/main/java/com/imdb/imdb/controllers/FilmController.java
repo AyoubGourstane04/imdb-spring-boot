@@ -3,7 +3,6 @@ package com.imdb.imdb.controllers;
 import java.io.IOException;
 import java.util.List;
 
-import org.bson.json.JsonObject;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -35,7 +34,7 @@ public class FilmController {
     }
 
     @PostMapping("/add")
-    public Film addNewFilm(@RequestParam("film") JsonObject film, @RequestParam("image") MultipartFile image)throws IOException{
+    public Film addNewFilm(@RequestParam("film") String film, @RequestParam("image") MultipartFile image)throws IOException{
         return filmService.insertFilm(film, image);
     }
 
@@ -78,9 +77,9 @@ public class FilmController {
     }
 
     
-    @PutMapping("/comment/{Title}")
-    public List<Film> addComment(@PathVariable String Title,@RequestBody String comment){
-        return filmService.insertComment(Title,comment);
+    @PutMapping("/comment/{id}")
+    public Film addComment(@PathVariable String id,@RequestBody String comment){
+        return filmService.insertComment(id,comment);
     }
 
     @GetMapping("/title/{Title}")

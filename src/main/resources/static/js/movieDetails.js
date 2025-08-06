@@ -119,7 +119,7 @@ function like(){
                     headers: {
                         "Authorization": "Bearer " + token
                     },
-                    mode:'cors',
+                    mode:'cors'
                 });
             if(res.status == 200){
                 const data =  await res.json();
@@ -135,3 +135,52 @@ function like(){
     
     response(token, filmId);
 }
+
+
+function comment(){
+    const formData = new FormData(document.querySelector(".form"));
+    const comment = formData.get("comment");
+
+    const input = document.getElementById("comment");
+
+    const commentsDiv = document.getElementById("commentsDiv");
+
+    const commentsH3 = document.getElementById("commentsH3");
+
+
+    const response = async(token,filmId) => {
+        try {
+            const res = await fetch(`http://localhost:8080/users/films/comment/${filmId}`, {
+                    method: 'PUT',
+                    headers: {
+                        "Authorization": "Bearer " + token
+                    },
+                    mode:'cors',
+                    body: comment
+                });
+            if(res.status == 200){
+                    const newComment = document.createElement("div");
+                    newComment.setAttribute("class", "p-3 bg-secondary rounded mb-2");
+                    newComment.textContent = comment;
+
+                    commentsDiv.appendChild(newComment);
+
+                    const data = await res.json();
+                    
+                    commentsH3.textContent = 'Comments (' + data.commentsCount + ') ';
+                    
+                    input.value = "";
+
+            }else{
+                throw new Error("Fetch Error");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    response(token,filmId);
+}
+
+
+

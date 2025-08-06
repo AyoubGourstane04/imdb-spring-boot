@@ -34,11 +34,11 @@ public class FilmService {
 
 
 
-    public Film insertFilm(JsonObject filmJson, MultipartFile image) throws IOException{
+    public Film insertFilm(String filmJson, MultipartFile image) throws IOException{
 
         ObjectMapper objMap = new ObjectMapper();
 
-        Film film = objMap.readValue(filmJson.toString(), Film.class);        
+        Film film = objMap.readValue(filmJson, Film.class);        
 
         String id = filmRepository.save(film).getId();
 
@@ -92,7 +92,7 @@ public class FilmService {
     }
 
     public static String checkString(String str){
-        if(str == null || !str.matches("^[A-Za-z0-9 !?,.']+$")){
+        if(str == null || !str.matches("^[A-Za-z0-9 !?,.'/]+$")){
             throw new IllegalArgumentException("Invalid format!");
         }else{
             return str;
@@ -126,30 +126,24 @@ public class FilmService {
 
         film.setLikesCount(newLikes);
         
-        
        
         return filmRepository.save(film);
     }
 
-    public List<Film> insertComment(String title,String Comment){
-       List<Film> movies = filmRepository.findByTitle(title);
-
-        if(movies.isEmpty()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, title + " not found.");
-        }
+    public Film insertComment(String id,String Comment){
+        Film film = filmRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, id+" not found."));
     
         Comment comment = new Comment(checkString(Comment),LocalDateTime.now());
 
-        for(Film film : movies){
-            film.getComments().add(comment);
+        film.getComments().add(comment);
 
-            Integer newComments=film.getCommentsCount();
-            newComments++;
+        Integer newComments=film.getCommentsCount();
+        
+        newComments++;
 
-            film.setCommentsCount(newComments);
-        }
+        film.setCommentsCount(newComments);
        
-        return filmRepository.saveAll(movies);
+        return filmRepository.save(film);
     }
 
 
