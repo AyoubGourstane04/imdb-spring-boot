@@ -21,7 +21,7 @@ public class CronJobConfiguration {
 
     private final AuthService authService ;
 
-    @Scheduled(cron = "* 30 * * * *")
+    @Scheduled(cron = " 30 * * * * * ")
     public void checkPasswordAge(){
         List<User> users = authService.getAllUsers()
                     .stream()
@@ -30,9 +30,7 @@ public class CronJobConfiguration {
                     .collect(Collectors.toList());
 
         authService.saveUsers(users);
-;
         
-        // System.out.println("Status Changed!");
     }
 
 
