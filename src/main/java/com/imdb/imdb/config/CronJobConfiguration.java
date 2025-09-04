@@ -21,7 +21,7 @@ public class CronJobConfiguration {
 
     private final AuthService authService ;
 
-    @Scheduled(cron = " * 10 * * * * ")
+    @Scheduled(cron = " 59 * * * * * ")
     public void checkPasswordAge(){
         List<User> users = authService.getAllUsers()
                     .stream()
