@@ -34,7 +34,7 @@ public class FileUploadService {
     public String uploadFile(MultipartFile file) throws IOException{
         String dir = fileUploadProperties.getUploadDir();
 
-        Path path = Paths.get(dir);
+        Path path = Path.of(dir);
 
         if(!Files.exists(path)){
             Files.createDirectories(path);

@@ -23,27 +23,26 @@ public class AppConfiguration {
     }
 
 
-    
     @Bean
-    public UserDetailsService userDetailsService(){
+    UserDetailsService userDetailsService(){
         return username -> authRepository.findByUsername(username)
                                         .orElseThrow(() -> new UsernameNotFoundException(username +" not found"));
     }
 
     @Bean
-    public AuthenticationProvider authenticationProvider(){
+    AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider provider=new DaoAuthenticationProvider(userDetailsService());
         provider.setPasswordEncoder(passwordEncoder());
             return provider;
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception{
+    AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception{
         return config.getAuthenticationManager();
     }
 }
