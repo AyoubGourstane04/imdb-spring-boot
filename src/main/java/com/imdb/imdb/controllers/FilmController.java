@@ -34,12 +34,12 @@ public class FilmController {
     }
 
     @PostMapping("/add")
-    public Film addNewFilm(@RequestParam String film, @RequestParam MultipartFile image)throws IOException{
+    public Film addNewFilm(@RequestParam("film") String film,@RequestParam("image") MultipartFile image)throws IOException{
         return filmService.insertFilm(film, image);
     }
 
     @PostMapping("/bulk")
-    public List<Film> addFilms(@RequestParam String films, @RequestParam MultipartFile[] images)
+    public List<Film> addFilms(@RequestParam("films")String films, @RequestParam("images") MultipartFile[] images)
                                                     throws JsonProcessingException,IOException{
             return filmService.insertFilms(films, images);
     }

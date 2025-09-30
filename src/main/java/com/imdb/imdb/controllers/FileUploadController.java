@@ -28,7 +28,7 @@ public class FileUploadController {
     private final FileUploadService fileUploadService;
 
     @PostMapping("/upload")
-    public String uploadFile(@RequestParam MultipartFile file) throws IOException{
+    public String uploadFile(@RequestParam("file") MultipartFile file) throws IOException{
         return fileUploadService.uploadFile(file);
     }
 
