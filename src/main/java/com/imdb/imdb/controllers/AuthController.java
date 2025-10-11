@@ -44,7 +44,7 @@ public class AuthController {
         
         if(response.getPasswordChangeFlag()){
             User user = authService.getUserByUsername(request.getUsername());
-            var req = passwordChangeService.createPasswordChangeRequestByUserId(user.getId().toString());
+            var req = passwordChangeService.createPasswordChangeRequestByUserId(user.getId());
           
             return ResponseEntity.status(302)
                                  .header("Location","/static/updatePassword/"+ req.getId())

@@ -22,7 +22,7 @@ function listUsers(){
                     const row = document.createElement("tr");
                     
                     const td1 = document.createElement("td");
-                    td1.innerText = new Date(data[i].id.date).toLocaleDateString()+' / '+ data[i].id.timestamp;
+                    td1.innerText = data[i].id;
 
                     const td2 = document.createElement("td");
                     td2.textContent = data[i].firstname;

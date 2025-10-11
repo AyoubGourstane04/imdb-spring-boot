@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class PasswordChangeRequest {
     @Id
     private ObjectId id;
-    private String userId;
+    private ObjectId userId;
     private String password;
     private String confirmPassword;
 }

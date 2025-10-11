@@ -85,7 +85,7 @@ public class AuthService {
 
     public PasswordChangeResponse updatePassword(PasswordChangeRequest request){
 
-        ObjectId userId = new ObjectId(request.getUserId());
+        ObjectId userId = request.getUserId();
 
         User user = getUserById(userId);
 

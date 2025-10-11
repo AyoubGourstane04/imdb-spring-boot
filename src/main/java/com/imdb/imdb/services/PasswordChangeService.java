@@ -29,7 +29,7 @@ public class PasswordChangeService {
     }
 
 
-    public PasswordChangeRequest createPasswordChangeRequestByUserId(String user_id){
+    public PasswordChangeRequest createPasswordChangeRequestByUserId(ObjectId user_id){
         PasswordChangeRequest request = new PasswordChangeRequest();
         request.setUserId(user_id);
         request.setPassword(null);
